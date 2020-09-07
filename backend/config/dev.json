@@ -1,0 +1,7 @@
+{
+    "DB_host": "localhost",
+    "DB_user": "root",
+    "DB__password": "",
+    "DB_name": "task_manager",
+    "server_port": 5000
+}

@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "start TaskManager",
+            "type": "shell",
+            "dependsOn": ["start frontend", "start backend"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "start frontend",
+            "type": "shell",
+            "command": "cd frontend; npm run start"
+        },
+        {
+            "label": "start backend",
+            "type": "shell",
+            "command": "cd backend; npm run start"
+        }
+    ]
+}
