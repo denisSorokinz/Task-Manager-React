@@ -1,14 +1,20 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { fetchHabits } from "../../services/DatabaseService";
 import HabitEntity from "../../entity/HabitEntity";
 import HabitsContainer from "./HabitListContainer";
 import Habit from "../Habit/Habit";
 import SecondaryText from "../SecondaryText/SecondaryText";
+/*
+1. Database
+2. Suspense
+3. Fetch error (Error boundary component)
+*/
+const resource = fetchHabits();
 
 class HabitList extends React.Component {
     state = {
         habits: [],
-        isLoading: true,
+        isLoading: true
     } as { habits: HabitEntity[]; isLoading: boolean };
 
     constructor(props: any) {
@@ -20,59 +26,15 @@ class HabitList extends React.Component {
         this.setState({ habits: h, isLoading: false });
     };
 
-    componentDidMount() {
-        fetchHabits()
-            .then((h: HabitEntity[]) => this.completeFetching(h))
-            .catch((err) => {
-                console.error(err);
-                this.setState({ isLoading: false });
-            });
-    }
-
     render() {
-        return this.state.isLoading ? (
-            <SecondaryText>Fetching habits...</SecondaryText>
-        ) : this.state.habits.length ? (
-            <HabitsContainer>
-                {this.state.habits.map((habit: HabitEntity) => (
-                    <Habit {...habit} key={habit.id} />
-                ))}
-            </HabitsContainer>
-        ) : (
-            <SecondaryText>No habits found</SecondaryText>
+        return (
+            <Suspense
+                fallback={<SecondaryText>Fetching habits...</SecondaryText>}
+            >
+                <HabitsContainer resource={resource} />
+            </Suspense>
         );
     }
 }
-
-// const HabitList: React.FC = () => {
-//     let [habits, setHabits] = useState<HabitEntity[]>();
-//     let [isLoading, setLoading] = useState<Boolean>(true);
-
-//     const completeFetching = (h: HabitEntity[]) => {
-//         setHabits(h);
-//         setLoading(false);
-//     };
-
-//     useEffect(() => {
-//         fetchHabits()
-//             .then((h: HabitEntity[]) => completeFetching(h))
-//             .catch((err) => {
-//                 console.error(err);
-//                 setLoading(false);
-//             });
-//     }, []);
-
-//     return isLoading ? (
-//         <SecondaryText>Fetching habits...</SecondaryText>
-//     ) : habits ? (
-//         <HabitsContainer>
-//             {habits.map((habit: HabitEntity) => (
-//                 <Habit {...habit} key={habit.id} />
-//             ))}
-//         </HabitsContainer>
-//     ) : (
-//         <SecondaryText>No habits found</SecondaryText>
-//     );
-// };
 
 export default HabitList;

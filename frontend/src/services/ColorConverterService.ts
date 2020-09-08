@@ -4,14 +4,16 @@ const componentToHex = (c: number) => {
 };
 
 export const rgbToHex = (rgba: string) => {
-    let firstBracket = rgba.indexOf("(");
-    let lastBracket = rgba.indexOf(")");
-    let colorComponentsString = rgba.substring(firstBracket + 1, lastBracket);
+    let firstBracketIndex = rgba.indexOf("(");
+    let lastBracketIndex = rgba.indexOf(")");
+    let colorComponentsString = rgba.substring(
+        firstBracketIndex + 1,
+        lastBracketIndex
+    );
     let colorComponentsStringsArray = colorComponentsString.split(",");
     let colorComponentsNumbersArray: any = colorComponentsStringsArray.map(
         (colorComponent, ind) => {
-
-            return ind === colorComponentsStringsArray.length - 1
+            return ind === colorComponentsStringsArray.length
                 ? null
                 : Number.parseInt(colorComponent);
         }
@@ -166,7 +168,7 @@ export const colorNameToHex = (color: string) => {
         white: "#ffffff",
         whitesmoke: "#f5f5f5",
         yellow: "#ffff00",
-        yellowgreen: "#9acd32",
+        yellowgreen: "#9acd32"
     } as { [key: string]: string };
 
     if (typeof colors[color.toLowerCase()] != "undefined")

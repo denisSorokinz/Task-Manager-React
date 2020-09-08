@@ -5,12 +5,12 @@ import { rgbToHex, colorNameToHex } from "../../services/ColorConverterService";
 import HabitCircleProps from "../../entity/HabitCircleProps";
 
 const HabitCircleBorder = styled.div.attrs(({ color }: HabitCircleProps) => ({
-    color: color ? (colors[color] ? colors[color] : color) : "darkgray",
+    color: color ? (colors[color] ? colors[color] : color) : "darkgray"
 }))`
     background: ${({
         color,
         repeats_done = 0,
-        repeats_count = 0,
+        repeats_count = 0
     }: HabitCircleProps) => {
         let hex = color.match(/rgb/) ? rgbToHex(color) : colorNameToHex(color);
         let invertedColor = invert(hex);
@@ -28,14 +28,13 @@ const HabitCircleBorder = styled.div.attrs(({ color }: HabitCircleProps) => ({
         let rightHalfOfCircle = `linear-gradient(${
             circleLengthBiggerThanHalf ? "90" : rightCirclePartLength
         }deg, ${colors.black} 50%, ${invertedColor} 50%)`;
-        let leftHalfOfCircle = `linear-gradient(${circleLengthBiggerThanHalf ? leftCirclePartLength : 90}deg, ${
+        let leftHalfOfCircle = `linear-gradient(${
+            circleLengthBiggerThanHalf ? leftCirclePartLength : 90
+        }deg, ${
             circleLengthBiggerThanHalf ? "transparent" : colors.black
         } 50%, ${
             circleLengthBiggerThanHalf ? invertedColor : "transparent"
         } 50%)`;
-        console.log(
-            `${leftHalfRotateCoefficient} + ${circleLength * coefficient} - 180 = ${leftCirclePartLength}`
-        );
         return `${leftHalfOfCircle}, ${rightHalfOfCircle}`;
     }};
     /* background-color: ${({ color }: HabitCircleProps) => {

@@ -4,14 +4,15 @@ import HabitCircleBorder from "./HabitCircleBorder";
 import HabitCircleButton from "./HabitCircleButton";
 
 const HabitCircle: React.FC<HabitEntity> = ({ children, ...habit }) => {
+    const trimQuotes = (str: string) => str.replace(/['"]+/g, "");
     let { repeats_done, repeats_count } = habit;
     let progress = { repeats_done, repeats_count };
+    let habitColor = trimQuotes(habit.color);
+
     return (
         <React.Fragment>
-            <HabitCircleBorder color={habit.color} {...progress} />
-            <HabitCircleButton color={habit.color}>
-                {children}
-            </HabitCircleButton>
+            <HabitCircleBorder color={habitColor} {...progress} />
+            <HabitCircleButton color={habitColor}>{children}</HabitCircleButton>
         </React.Fragment>
     );
 };

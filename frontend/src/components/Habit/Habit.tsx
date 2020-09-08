@@ -7,16 +7,21 @@ const Habit: React.FC<HabitEntity> = ({ ...habit }) => {
     let [habitFirstLetter, setHabitFirstLetter] = useState<string>("");
 
     const getFirstLetter = (str: any = ""): string => {
-        return (typeof str === "string" && str.trim().substring(0, 1).toUpperCase()) || "";
+        return (
+            (typeof str === "string" &&
+                str
+                    .trim()
+                    .substring(0, 1)
+                    .toUpperCase()) ||
+            ""
+        );
     };
 
     useEffect(() => {
         let firstLetter = getFirstLetter(habit?.name);
         setHabitFirstLetter(firstLetter);
     }, [habit]);
-
     return (
-
         <HabitContainer>
             {/* TODO: add habit progress*/}
             <HabitCircle {...habit}>{habitFirstLetter}</HabitCircle>
